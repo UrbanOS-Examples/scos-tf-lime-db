@@ -67,7 +67,7 @@ resource "aws_db_instance" "lime_db" {
   vpc_security_group_ids  = ["${aws_security_group.lime_security_group.id}"]
   db_subnet_group_name    = "${aws_db_subnet_group.lime_db_subnet_group.name}"
   engine                  = "postgres"
-  engine_version          = "10.4"
+  engine_version          = "10.6"
   allocated_storage       = "${var.lime_db_storage}"
   storage_type            = "gp2"
   username                = "${var.lime_db_name}"
@@ -80,6 +80,7 @@ resource "aws_db_instance" "lime_db" {
   apply_immediately       = "${var.lime_db_apply_immediately}"
   skip_final_snapshot     = "${var.skip_final_db_snapshot}"
   final_snapshot_identifier = "lime-${sha1(timestamp())}"
+  auto_minor_version_upgrade = false
 
   lifecycle = {
     prevent_destroy = true
